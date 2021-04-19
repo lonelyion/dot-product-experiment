@@ -3,9 +3,9 @@
 const int threadsPerBlock = 256;
 
 __global__
-void dot_product_gpu(const float *a, const float *b, double *c, const int N) {
-    __shared__ float cache[threadsPerBlock];
-    unsigned int tid = threadIdx.x + blockIdx.x * blockDim.x;
+void dot_product_gpu(const float *a, const float *b, double *partial_c, const int N) {
+    __shared__ float cache[threadsPerBlock];    //这个内存缓冲区将保存每个线程计算的加和值
+    unsigned int tid = threadIdx.x + blockIdx.x * blockDim.x;   //根据grid和block计算线程索引
     unsigned int cacheIdx = threadIdx.x;
     float temp = 0;
     while(tid < N) {
@@ -14,7 +14,7 @@ void dot_product_gpu(const float *a, const float *b, double *c, const int N) {
     }
     cache[cacheIdx] = temp;
 
-    __syncthreads();
+    __syncthreads();    // 线程同步
 
     // 规约运算 要求threadsPerBlock必须是2的指数
     int i = blockDim.x / 2;
@@ -22,11 +22,11 @@ void dot_product_gpu(const float *a, const float *b, double *c, const int N) {
         if(cacheIdx < i) {
             cache[cacheIdx] += cache[cacheIdx + i];
         }
-        __syncthreads();
+        __syncthreads();    // 线程同步
         i /= 2;
     }
     if(cacheIdx == 0) {
-        c[blockIdx.x] = cache[0];
+        partial_c[blockIdx.x] = cache[0];
     }
 }
 
@@ -109,6 +109,7 @@ int calc_main(int N, int blocksPerGrid) {
 }
 
 int main() {
+    freopen("output.csv", "w", stdout);
     int data_size[25] = {16, 0};
     // 2^5  ~  2^28
     //  32  ~  268435456

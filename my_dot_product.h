@@ -10,6 +10,7 @@
 #include <iostream>
 #include <chrono>
 #include "omp.h"
+#include <cstdlib>
 
 extern const size_t vector_n;
 
