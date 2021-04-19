@@ -18,7 +18,9 @@ c = [a1, a2, ..., an] * [b1, b2, ..., bn] = sum(a1×b1, a2×b2, ... an×bn)
 
 ## 运行和输出
 
-如果你不想自己编译，也可以前往[Releases](https://github.com/lonelyion/dot_product_experiment/releases)页面下载Windows平台的二进制文件，当然需要NVIDIA的显卡，否则不能运行。当然有N卡还是不能运行的话，可以尝试把数据量改小一点再编译，可能显存不够也会出问题。
+如果你不想自己编译，也可以前往[Releases](https://github.com/lonelyion/dot_product_experiment/releases)页面下载Windows平台的二进制文件，当然需要NVIDIA的显卡（但是不需要安装CUDA），否则不能运行。
+
+当然有N卡还是不能运行的话，可以尝试把数据量改小一点再编译，可能显存不够也会出问题。
 
 程序会在当前目录创建一个`output.csv`的文件作为输出，表格样例如下，时间的单位为微秒(μs)：
 
