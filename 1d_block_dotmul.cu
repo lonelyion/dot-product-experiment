@@ -1,3 +1,9 @@
+/*
+    这个是另一个版本的点积，是小向量点积但是有很多点积要计算的
+    （main.cu的版本是大向量点积算一次）
+    想运行可以直接换掉main.cu或者改一下CMakeList.txt
+*/
+
 #include <iostream>
 #include <vector>
 #include "my_dot_product.h"
